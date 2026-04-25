@@ -58,6 +58,7 @@ import {
   Bus,
   BookMarked,
   Clock,
+  Trophy,
   type LucideIcon,
 } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState, useMemo, useCallback } from "react";
@@ -90,6 +91,7 @@ const navGroups: NavGroup[] = [
       { icon: Award, label: "Grades", path: "/grades" },
       { icon: FileCheck, label: "Report Cards", path: "/report-cards" },
       { icon: Clock, label: "Timetable", path: "/timetable" },
+      { icon: Trophy, label: "Special Exams", path: "/special-exams" },
     ],
   },
   {

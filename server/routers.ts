@@ -1484,6 +1484,150 @@ export const appRouter = router({
       }),
   }),
 
+  // Special/Competitive Exams
+  specialExams: router({
+    list: protectedProcedure
+      .input(
+        z.object({
+          category: z.string().optional(),
+          status: z.string().optional(),
+          academicYearId: z.number().optional(),
+        }).optional()
+      )
+      .query(({ input }) => db.getSpecialExams(input ?? undefined)),
+
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        const exam = await db.getSpecialExamById(input.id);
+        if (!exam) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Special exam not found" });
+        }
+        return exam;
+      }),
+
+    create: protectedProcedure
+      .input(
+        z.object({
+          name: z.string().min(1),
+          category: z.enum(["OLYMPIAD", "ENTRANCE", "SCHOLARSHIP", "CERTIFICATION"]),
+          conductingBody: z.string().min(1),
+          description: z.string().optional(),
+          eligibleClassIds: z.array(z.number()),
+          examDate: z.string(),
+          registrationDeadline: z.string(),
+          venue: z.string().optional(),
+          totalFee: z.number().min(0),
+          installments: z.array(
+            z.object({
+              installmentNo: z.number(),
+              amount: z.number().min(0),
+              dueDate: z.string(),
+              description: z.string(),
+            })
+          ),
+          academicYearId: z.number(),
+          maxSeats: z.number().optional(),
+        })
+      )
+      .mutation(({ input }) =>
+        db.createSpecialExam({
+          ...input,
+          examDate: new Date(input.examDate),
+          registrationDeadline: new Date(input.registrationDeadline),
+          installments: input.installments.map(i => ({ ...i, dueDate: new Date(i.dueDate) })),
+        })
+      ),
+
+    update: protectedProcedure
+      .input(
+        z.object({
+          id: z.number(),
+          name: z.string().optional(),
+          status: z.enum(["OPEN", "CLOSED", "COMPLETED"]).optional(),
+          examDate: z.string().optional(),
+          venue: z.string().optional(),
+          registrationDeadline: z.string().optional(),
+        })
+      )
+      .mutation(({ input }) => {
+        const { id, ...data } = input;
+        return db.updateSpecialExam(id, {
+          ...data,
+          examDate: data.examDate ? new Date(data.examDate) : undefined,
+          registrationDeadline: data.registrationDeadline ? new Date(data.registrationDeadline) : undefined,
+        });
+      }),
+
+    enroll: protectedProcedure
+      .input(
+        z.object({
+          specialExamId: z.number(),
+          studentId: z.number(),
+        })
+      )
+      .mutation(({ input }) => db.enrollStudentInExam(input)),
+
+    getEnrollments: protectedProcedure
+      .input(
+        z.object({
+          specialExamId: z.number().optional(),
+          studentId: z.number().optional(),
+          status: z.string().optional(),
+        }).optional()
+      )
+      .query(({ input }) => db.getSpecialExamEnrollments(input ?? undefined)),
+
+    updateEnrollment: protectedProcedure
+      .input(
+        z.object({
+          enrollmentId: z.number(),
+          status: z.string().optional(),
+          examRollNo: z.string().optional(),
+          result: z.string().optional(),
+          score: z.number().optional(),
+          rank: z.number().optional(),
+          remarks: z.string().optional(),
+        })
+      )
+      .mutation(({ input }) => {
+        const { enrollmentId, ...data } = input;
+        return db.updateSpecialExamEnrollment(enrollmentId, data);
+      }),
+
+    getInstallments: protectedProcedure
+      .input(z.object({ specialExamId: z.number() }))
+      .query(({ input }) => db.getSpecialExamInstallments(input.specialExamId)),
+
+    recordPayment: protectedProcedure
+      .input(
+        z.object({
+          enrollmentId: z.number(),
+          installmentId: z.number(),
+          amount: z.number().min(0),
+          paymentDate: z.string(),
+          paymentMode: z.enum(["CASH", "BANK_TRANSFER", "ONLINE", "CHEQUE"]),
+          transactionRef: z.string().optional(),
+        })
+      )
+      .mutation(({ input }) =>
+        db.recordSpecialExamPayment({
+          ...input,
+          paymentDate: new Date(input.paymentDate),
+        })
+      ),
+
+    getPayments: protectedProcedure
+      .input(z.object({ enrollmentId: z.number() }))
+      .query(({ input }) => db.getSpecialExamPayments(input.enrollmentId)),
+
+    analytics: protectedProcedure.query(() => db.getSpecialExamAnalytics()),
+
+    getStudentExams: protectedProcedure
+      .input(z.object({ studentId: z.number() }))
+      .query(({ input }) => db.getStudentSpecialExams(input.studentId)),
+  }),
+
   // Analytics & Dashboard
   analytics: router({
     students: protectedProcedure.query(() => db.getStudentAnalytics()),

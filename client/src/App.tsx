@@ -31,6 +31,8 @@ import Timetable from "./pages/Timetable";
 import Transport from "./pages/Transport";
 import Library from "./pages/Library";
 import SchoolSettings from "./pages/SchoolSettings";
+import SpecialExams from "./pages/SpecialExams";
+import SpecialExamDetails from "./pages/SpecialExamDetails";
 
 function Router() {
   return (
@@ -49,6 +51,8 @@ function Router() {
             <Route path={"/students/:id"} component={StudentDetails} />
             <Route path={"/staff"} component={StaffList} />
             <Route path={"/staff/:id"} component={StaffProfile} />
+            <Route path={"/special-exams"} component={SpecialExams} />
+            <Route path={"/special-exams/:id"} component={SpecialExamDetails} />
             <Route path={"/exams"} component={Exams} />
             <Route path={"/exams/:id"} component={ExamDetails} />
             <Route path={"/performance"} component={PerformanceAnalytics} />

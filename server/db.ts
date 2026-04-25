@@ -7,6 +7,7 @@ import {
   MOCK_APPLICATIONS, MOCK_FEE_STRUCTURES, MOCK_INVOICES, MOCK_STAFF,
   MOCK_EXAM_TYPES, MOCK_GRADE_SCALES, MOCK_LEAVE_TYPES, MOCK_MESSAGE_TEMPLATES,
   getMockStudentAnalytics, getMockFinancialAnalytics,
+  MOCK_SPECIAL_EXAMS, MOCK_SPECIAL_EXAM_INSTALLMENTS, MOCK_SPECIAL_EXAM_ENROLLMENTS, getMockSpecialExamAnalytics,
 } from "./mock";
 
 let _db: any | null = null;
@@ -3035,6 +3036,179 @@ export async function getParentChildren(parentId: number) {
     .innerJoin(students, eq(studentParents.studentId, students.id))
     .leftJoin(classes, eq(students.classId, classes.id))
     .where(eq(studentParents.userId, parentId));
-  
+
   return children;
+}
+
+// ==================== Special/Competitive Exams ====================
+
+export async function getSpecialExams(filters?: {
+  category?: string;
+  status?: string;
+  academicYearId?: number;
+}) {
+  const db = await getDb();
+  if (!db) {
+    let result = [...MOCK_SPECIAL_EXAMS];
+    if (filters?.category) result = result.filter(e => e.category === filters.category);
+    if (filters?.status) result = result.filter(e => e.status === filters.status);
+    if (filters?.academicYearId) result = result.filter(e => e.academicYearId === filters.academicYearId);
+    return result;
+  }
+  return MOCK_SPECIAL_EXAMS;
+}
+
+export async function getSpecialExamById(id: number) {
+  const db = await getDb();
+  if (!db) {
+    const exam = MOCK_SPECIAL_EXAMS.find(e => e.id === id);
+    if (!exam) return null;
+    const installments = MOCK_SPECIAL_EXAM_INSTALLMENTS.filter(i => i.specialExamId === id);
+    const enrollments = MOCK_SPECIAL_EXAM_ENROLLMENTS.filter(e => e.specialExamId === id);
+    return { ...exam, installments, enrollments };
+  }
+  return null;
+}
+
+export async function createSpecialExam(_data: {
+  name: string;
+  category: string;
+  conductingBody: string;
+  description?: string;
+  eligibleClassIds: number[];
+  examDate: Date;
+  registrationDeadline: Date;
+  venue?: string;
+  totalFee: number;
+  installments: Array<{ installmentNo: number; amount: number; dueDate: Date; description: string }>;
+  academicYearId: number;
+  maxSeats?: number;
+}) {
+  const db = await getDb();
+  if (!db) return { success: true, id: MOCK_SPECIAL_EXAMS.length + 1 } as any;
+  return { success: true } as any;
+}
+
+export async function updateSpecialExam(_id: number, _data: {
+  name?: string;
+  status?: string;
+  examDate?: Date;
+  venue?: string;
+  registrationDeadline?: Date;
+}) {
+  const db = await getDb();
+  if (!db) return { success: true } as any;
+  return { success: true } as any;
+}
+
+export async function enrollStudentInExam(data: {
+  specialExamId: number;
+  studentId: number;
+}) {
+  const db = await getDb();
+  if (!db) {
+    const exam = MOCK_SPECIAL_EXAMS.find(e => e.id === data.specialExamId);
+    const student = MOCK_STUDENTS.find(s => s.id === data.studentId);
+    if (!exam || !student) return { success: false } as any;
+    const cls = MOCK_CLASSES.find(c => c.id === student.classId);
+    return {
+      success: true,
+      enrollment: {
+        id: MOCK_SPECIAL_EXAM_ENROLLMENTS.length + 1,
+        specialExamId: data.specialExamId,
+        studentId: data.studentId,
+        studentName: `${student.firstName} ${student.lastName}`,
+        studentNo: student.studentNo,
+        className: cls?.name ?? "",
+        enrollmentDate: new Date(),
+        status: "ENROLLED",
+        totalFee: exam.totalFee,
+        amountPaid: 0,
+        paymentStatus: "PENDING",
+        examRollNo: null,
+        result: null,
+        score: null,
+        rank: null,
+      },
+    } as any;
+  }
+  return { success: true } as any;
+}
+
+export async function getSpecialExamEnrollments(filters?: {
+  specialExamId?: number;
+  studentId?: number;
+  status?: string;
+}) {
+  const db = await getDb();
+  if (!db) {
+    let result = [...MOCK_SPECIAL_EXAM_ENROLLMENTS];
+    if (filters?.specialExamId) result = result.filter(e => e.specialExamId === filters.specialExamId);
+    if (filters?.studentId) result = result.filter(e => e.studentId === filters.studentId);
+    if (filters?.status) result = result.filter(e => e.status === filters.status);
+    return result;
+  }
+  return MOCK_SPECIAL_EXAM_ENROLLMENTS;
+}
+
+export async function updateSpecialExamEnrollment(_enrollmentId: number, _data: {
+  status?: string;
+  examRollNo?: string;
+  result?: string;
+  score?: number;
+  rank?: number;
+  remarks?: string;
+}) {
+  const db = await getDb();
+  if (!db) return { success: true } as any;
+  return { success: true } as any;
+}
+
+export async function getSpecialExamInstallments(specialExamId: number) {
+  const db = await getDb();
+  if (!db) return MOCK_SPECIAL_EXAM_INSTALLMENTS.filter(i => i.specialExamId === specialExamId);
+  return [];
+}
+
+export async function recordSpecialExamPayment(_data: {
+  enrollmentId: number;
+  installmentId: number;
+  amount: number;
+  paymentDate: Date;
+  paymentMode: string;
+  transactionRef?: string;
+}) {
+  const db = await getDb();
+  if (!db) return { success: true, id: Date.now() } as any;
+  return { success: true } as any;
+}
+
+export async function getSpecialExamPayments(_enrollmentId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return [];
+}
+
+export async function getSpecialExamAnalytics() {
+  const db = await getDb();
+  if (!db) return getMockSpecialExamAnalytics();
+  return getMockSpecialExamAnalytics();
+}
+
+export async function getStudentSpecialExams(studentId: number) {
+  const db = await getDb();
+  if (!db) {
+    const enrollments = MOCK_SPECIAL_EXAM_ENROLLMENTS.filter(e => e.studentId === studentId);
+    return enrollments.map(enrollment => {
+      const exam = MOCK_SPECIAL_EXAMS.find(e => e.id === enrollment.specialExamId);
+      return {
+        ...enrollment,
+        examName: exam?.name ?? "",
+        examCategory: exam?.category ?? "",
+        examDate: exam?.examDate ?? new Date(),
+        conductingBody: exam?.conductingBody ?? "",
+      };
+    });
+  }
+  return [];
 }

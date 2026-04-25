@@ -226,3 +226,351 @@ export const MOCK_MESSAGE_TEMPLATES = [
   { id: 1, organizationId: 1, name: "Fee Reminder", category: "fees" as const, channel: "sms" as const, subject: "Fee Due Reminder", content: "Dear {parentName}, this is a reminder that fee of Rs {amount} for {studentName} is due on {dueDate}.", variables: JSON.stringify(["parentName", "amount", "studentName", "dueDate"]), isActive: 1, createdBy: 1, createdAt: yearAgo, updatedAt: now },
   { id: 2, organizationId: 1, name: "Attendance Alert", category: "attendance" as const, channel: "whatsapp" as const, subject: "Absence Notification", content: "Dear {parentName}, {studentName} was marked absent today.", variables: JSON.stringify(["parentName", "studentName"]), isActive: 1, createdBy: 1, createdAt: yearAgo, updatedAt: now },
 ];
+
+// ==================== Special/Competitive Exams ====================
+
+export const MOCK_SPECIAL_EXAMS = [
+  {
+    id: 1,
+    organizationId: 1,
+    name: "International Math Olympiad (IMO) 2026",
+    category: "OLYMPIAD" as const,
+    conductingBody: "Science Olympiad Foundation (SOF)",
+    description: "International Mathematics Olympiad conducted by SOF for classes 1-10. Tests mathematical reasoning, logical thinking, and problem-solving skills.",
+    eligibleClassIds: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    examDate: new Date("2026-11-15"),
+    registrationDeadline: new Date("2026-09-30"),
+    venue: "School Campus",
+    totalFee: 3500,
+    installmentsAllowed: 2,
+    academicYearId: 2,
+    status: "OPEN" as const,
+    maxSeats: 120,
+    enrolledCount: 78,
+    isActive: 1,
+    createdAt: now,
+  },
+  {
+    id: 2,
+    organizationId: 1,
+    name: "National Science Olympiad (NSO) 2026",
+    category: "OLYMPIAD" as const,
+    conductingBody: "Science Olympiad Foundation (SOF)",
+    description: "Tests scientific reasoning and application of science concepts. Covers Physics, Chemistry, Biology, and General Science.",
+    eligibleClassIds: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    examDate: new Date("2026-11-22"),
+    registrationDeadline: new Date("2026-09-30"),
+    venue: "School Campus",
+    totalFee: 3500,
+    installmentsAllowed: 2,
+    academicYearId: 2,
+    status: "OPEN" as const,
+    maxSeats: 100,
+    enrolledCount: 62,
+    isActive: 1,
+    createdAt: now,
+  },
+  {
+    id: 3,
+    organizationId: 1,
+    name: "National Talent Search Examination (NTSE) 2026",
+    category: "SCHOLARSHIP" as const,
+    conductingBody: "NCERT",
+    description: "National-level scholarship exam for Class 10 students. Stage-1 at state level, Stage-2 at national level. Scholarship of Rs 1250/month until PhD.",
+    eligibleClassIds: [13],
+    examDate: new Date("2026-11-05"),
+    registrationDeadline: new Date("2026-08-31"),
+    venue: "Government Examination Centre, Sector 14",
+    totalFee: 5000,
+    installmentsAllowed: 1,
+    academicYearId: 2,
+    status: "OPEN" as const,
+    maxSeats: 40,
+    enrolledCount: 35,
+    isActive: 1,
+    createdAt: now,
+  },
+  {
+    id: 4,
+    organizationId: 1,
+    name: "JEE Foundation Program 2026-27",
+    category: "ENTRANCE" as const,
+    conductingBody: "School + Allen Career Institute",
+    description: "Foundation program for JEE preparation starting from Class 8. Includes weekend coaching, study material, and monthly assessments. Partnered with Allen Career Institute.",
+    eligibleClassIds: [11, 12, 13],
+    examDate: new Date("2027-02-15"),
+    registrationDeadline: new Date("2026-07-15"),
+    venue: "School Academic Block - Room 201-204",
+    totalFee: 45000,
+    installmentsAllowed: 4,
+    academicYearId: 2,
+    status: "OPEN" as const,
+    maxSeats: 60,
+    enrolledCount: 42,
+    isActive: 1,
+    createdAt: yearAgo,
+  },
+  {
+    id: 5,
+    organizationId: 1,
+    name: "NEET Foundation Program 2026-27",
+    category: "ENTRANCE" as const,
+    conductingBody: "School + Aakash Institute",
+    description: "Foundation program for NEET preparation. Covers Biology, Physics, Chemistry with focus on NCERT and competitive exam patterns. Partnership with Aakash Institute.",
+    eligibleClassIds: [12, 13],
+    examDate: new Date("2027-02-20"),
+    registrationDeadline: new Date("2026-07-31"),
+    venue: "School Science Block - Lab Complex",
+    totalFee: 42000,
+    installmentsAllowed: 4,
+    academicYearId: 2,
+    status: "OPEN" as const,
+    maxSeats: 45,
+    enrolledCount: 28,
+    isActive: 1,
+    createdAt: yearAgo,
+  },
+  {
+    id: 6,
+    organizationId: 1,
+    name: "International English Olympiad (IEO) 2026",
+    category: "OLYMPIAD" as const,
+    conductingBody: "Science Olympiad Foundation (SOF)",
+    description: "Tests English language skills including grammar, vocabulary, reading comprehension, and writing ability.",
+    eligibleClassIds: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    examDate: new Date("2026-10-20"),
+    registrationDeadline: new Date("2026-09-15"),
+    venue: "School Campus",
+    totalFee: 3500,
+    installmentsAllowed: 1,
+    academicYearId: 2,
+    status: "OPEN" as const,
+    maxSeats: 80,
+    enrolledCount: 45,
+    isActive: 1,
+    createdAt: now,
+  },
+  {
+    id: 7,
+    organizationId: 1,
+    name: "Cyber Olympiad (NCO) 2025",
+    category: "OLYMPIAD" as const,
+    conductingBody: "Science Olympiad Foundation (SOF)",
+    description: "National Cyber Olympiad testing computer science knowledge, logical reasoning, and IT skills.",
+    eligibleClassIds: [7, 8, 9, 10, 11, 12, 13],
+    examDate: new Date("2025-12-10"),
+    registrationDeadline: new Date("2025-10-15"),
+    venue: "School Campus",
+    totalFee: 3000,
+    installmentsAllowed: 1,
+    academicYearId: 1,
+    status: "COMPLETED" as const,
+    maxSeats: 60,
+    enrolledCount: 52,
+    isActive: 1,
+    createdAt: yearAgo,
+  },
+  {
+    id: 8,
+    organizationId: 1,
+    name: "ASSET Exam 2026",
+    category: "CERTIFICATION" as const,
+    conductingBody: "Educational Initiatives",
+    description: "Assessment of Scholastic Skills through Educational Testing. Diagnostic test providing detailed feedback on student strengths and weaknesses.",
+    eligibleClassIds: [6, 7, 8, 9, 10, 11, 12, 13],
+    examDate: new Date("2027-01-18"),
+    registrationDeadline: new Date("2026-11-30"),
+    venue: "School Campus",
+    totalFee: 2500,
+    installmentsAllowed: 1,
+    academicYearId: 2,
+    status: "OPEN" as const,
+    maxSeats: 150,
+    enrolledCount: 34,
+    isActive: 1,
+    createdAt: now,
+  },
+];
+
+export const MOCK_SPECIAL_EXAM_INSTALLMENTS = [
+  // IMO (id=1) - 2 installments
+  { id: 1, specialExamId: 1, installmentNo: 1, amount: 2000, dueDate: new Date("2026-08-15"), description: "Registration Fee" },
+  { id: 2, specialExamId: 1, installmentNo: 2, amount: 1500, dueDate: new Date("2026-10-15"), description: "Exam Fee" },
+  // NSO (id=2) - 2 installments
+  { id: 3, specialExamId: 2, installmentNo: 1, amount: 2000, dueDate: new Date("2026-08-15"), description: "Registration Fee" },
+  { id: 4, specialExamId: 2, installmentNo: 2, amount: 1500, dueDate: new Date("2026-10-15"), description: "Exam Fee" },
+  // NTSE (id=3) - 1 installment
+  { id: 5, specialExamId: 3, installmentNo: 1, amount: 5000, dueDate: new Date("2026-08-15"), description: "Full Registration Fee" },
+  // JEE Foundation (id=4) - 4 installments
+  { id: 6, specialExamId: 4, installmentNo: 1, amount: 15000, dueDate: new Date("2026-07-01"), description: "Admission Fee" },
+  { id: 7, specialExamId: 4, installmentNo: 2, amount: 10000, dueDate: new Date("2026-09-01"), description: "Quarterly Fee - Q1" },
+  { id: 8, specialExamId: 4, installmentNo: 3, amount: 10000, dueDate: new Date("2026-12-01"), description: "Quarterly Fee - Q2" },
+  { id: 9, specialExamId: 4, installmentNo: 4, amount: 10000, dueDate: new Date("2027-02-01"), description: "Quarterly Fee - Q3" },
+  // NEET Foundation (id=5) - 4 installments
+  { id: 10, specialExamId: 5, installmentNo: 1, amount: 14000, dueDate: new Date("2026-07-15"), description: "Admission Fee" },
+  { id: 11, specialExamId: 5, installmentNo: 2, amount: 10000, dueDate: new Date("2026-09-15"), description: "Quarterly Fee - Q1" },
+  { id: 12, specialExamId: 5, installmentNo: 3, amount: 10000, dueDate: new Date("2026-12-15"), description: "Quarterly Fee - Q2" },
+  { id: 13, specialExamId: 5, installmentNo: 4, amount: 8000, dueDate: new Date("2027-02-15"), description: "Quarterly Fee - Q3" },
+  // IEO (id=6) - 1 installment
+  { id: 14, specialExamId: 6, installmentNo: 1, amount: 3500, dueDate: new Date("2026-09-01"), description: "Full Registration Fee" },
+  // NCO (id=7) - 1 installment
+  { id: 15, specialExamId: 7, installmentNo: 1, amount: 3000, dueDate: new Date("2025-10-01"), description: "Full Registration Fee" },
+  // ASSET (id=8) - 1 installment
+  { id: 16, specialExamId: 8, installmentNo: 1, amount: 2500, dueDate: new Date("2026-11-15"), description: "Full Registration Fee" },
+];
+
+function mockSpecialExamEnrollments() {
+  const result: Array<{
+    id: number;
+    specialExamId: number;
+    studentId: number;
+    studentName: string;
+    studentNo: string;
+    className: string;
+    enrollmentDate: Date;
+    status: string;
+    totalFee: number;
+    amountPaid: number;
+    paymentStatus: string;
+    examRollNo: string | null;
+    result: string | null;
+    score: number | null;
+    rank: number | null;
+  }> = [];
+  let id = 1;
+
+  // JEE Foundation enrollments (exam 4) - 42 students from Class 8-10
+  const jeeStudents = MOCK_STUDENTS.filter(s => [11, 12, 13].includes(s.classId)).slice(0, 42);
+  for (const student of jeeStudents) {
+    const cls = MOCK_CLASSES.find(c => c.id === student.classId);
+    const paid = id % 5 === 0 ? 15000 : id % 3 === 0 ? 25000 : 45000;
+    result.push({
+      id,
+      specialExamId: 4,
+      studentId: student.id,
+      studentName: `${student.firstName} ${student.lastName}`,
+      studentNo: student.studentNo,
+      className: cls?.name ?? "",
+      enrollmentDate: new Date("2026-06-20"),
+      status: "ENROLLED",
+      totalFee: 45000,
+      amountPaid: paid,
+      paymentStatus: paid >= 45000 ? "PAID" : paid > 0 ? "PARTIAL" : "PENDING",
+      examRollNo: `JEE-${String(id).padStart(3, "0")}`,
+      result: null,
+      score: null,
+      rank: null,
+    });
+    id++;
+  }
+
+  // IMO enrollments (exam 1) - from various classes
+  const imoStudents = MOCK_STUDENTS.filter(s => s.classId >= 4).slice(0, 78);
+  for (const student of imoStudents) {
+    const cls = MOCK_CLASSES.find(c => c.id === student.classId);
+    const paid = id % 4 === 0 ? 2000 : 3500;
+    result.push({
+      id,
+      specialExamId: 1,
+      studentId: student.id,
+      studentName: `${student.firstName} ${student.lastName}`,
+      studentNo: student.studentNo,
+      className: cls?.name ?? "",
+      enrollmentDate: new Date("2026-08-10"),
+      status: "ENROLLED",
+      totalFee: 3500,
+      amountPaid: paid,
+      paymentStatus: paid >= 3500 ? "PAID" : "PARTIAL",
+      examRollNo: `IMO-${String(id).padStart(3, "0")}`,
+      result: null,
+      score: null,
+      rank: null,
+    });
+    id++;
+  }
+
+  // NTSE enrollments (exam 3) - Class 10 only
+  const ntseStudents = MOCK_STUDENTS.filter(s => s.classId === 13).slice(0, 35);
+  for (const student of ntseStudents) {
+    result.push({
+      id,
+      specialExamId: 3,
+      studentId: student.id,
+      studentName: `${student.firstName} ${student.lastName}`,
+      studentNo: student.studentNo,
+      className: "Class 10",
+      enrollmentDate: new Date("2026-07-15"),
+      status: "ENROLLED",
+      totalFee: 5000,
+      amountPaid: 5000,
+      paymentStatus: "PAID",
+      examRollNo: `NTSE-${String(id - 119).padStart(3, "0")}`,
+      result: null,
+      score: null,
+      rank: null,
+    });
+    id++;
+  }
+
+  // NCO completed exam (exam 7) - with results
+  const ncoStudents = MOCK_STUDENTS.filter(s => s.classId >= 7 && s.classId <= 13).slice(0, 52);
+  for (let i = 0; i < ncoStudents.length; i++) {
+    const student = ncoStudents[i];
+    const cls = MOCK_CLASSES.find(c => c.id === student.classId);
+    const score = 40 + Math.floor(Math.random() * 55);
+    result.push({
+      id,
+      specialExamId: 7,
+      studentId: student.id,
+      studentName: `${student.firstName} ${student.lastName}`,
+      studentNo: student.studentNo,
+      className: cls?.name ?? "",
+      enrollmentDate: new Date("2025-09-20"),
+      status: "COMPLETED",
+      totalFee: 3000,
+      amountPaid: 3000,
+      paymentStatus: "PAID",
+      examRollNo: `NCO-${String(id).padStart(3, "0")}`,
+      result: score >= 80 ? "MERIT" : score >= 40 ? "PASS" : "FAIL",
+      score,
+      rank: i + 1,
+    });
+    id++;
+  }
+
+  return result;
+}
+
+export const MOCK_SPECIAL_EXAM_ENROLLMENTS = mockSpecialExamEnrollments();
+
+export function getMockSpecialExamAnalytics() {
+  const exams = MOCK_SPECIAL_EXAMS;
+  const enrollments = MOCK_SPECIAL_EXAM_ENROLLMENTS;
+
+  const totalExams = exams.length;
+  const activeExams = exams.filter(e => e.status === "OPEN").length;
+  const totalEnrollments = enrollments.length;
+  const totalRevenue = enrollments.reduce((sum, e) => sum + e.amountPaid, 0);
+  const pendingFees = enrollments.reduce((sum, e) => sum + (e.totalFee - e.amountPaid), 0);
+
+  const byCategory: Record<string, number> = {};
+  exams.forEach(e => {
+    byCategory[e.category] = (byCategory[e.category] || 0) + 1;
+  });
+
+  const byPaymentStatus: Record<string, number> = {};
+  enrollments.forEach(e => {
+    byPaymentStatus[e.paymentStatus] = (byPaymentStatus[e.paymentStatus] || 0) + 1;
+  });
+
+  return {
+    totalExams,
+    activeExams,
+    totalEnrollments,
+    totalRevenue,
+    pendingFees,
+    collectionRate: totalRevenue / (totalRevenue + pendingFees) * 100,
+    byCategory,
+    byPaymentStatus,
+  };
+}
