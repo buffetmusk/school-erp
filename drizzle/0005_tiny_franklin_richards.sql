@@ -1,0 +1,1 @@
+ALTER TABLE `student_marks` MODIFY COLUMN `entered_by` int NOT NULL;
