@@ -114,3 +114,7 @@ temp/
 
 # Claude Code
 .claude/
+.vercel
+
+# Vercel API build artifacts
+api/trpc/\[trpc\].js

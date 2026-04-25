@@ -1,5 +1,4 @@
 import { eq, desc, and, sql } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, staffSalaries, staffPayments, staffLeaves, leaveTypes, staff } from "../drizzle/schema";
 import { ENV } from './_core/env';
 import {
@@ -10,12 +9,12 @@ import {
   getMockStudentAnalytics, getMockFinancialAnalytics,
 } from "./mock";
 
-let _db: ReturnType<typeof drizzle> | null = null;
+let _db: any | null = null;
 
-// Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
+      const { drizzle } = await import("drizzle-orm/mysql2");
       _db = drizzle(process.env.DATABASE_URL);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
